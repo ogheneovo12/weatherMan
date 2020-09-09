@@ -7,6 +7,18 @@ body {
   font-family: "century";
   color: #41484e;
 }
+.thunder{
+  background:#2E4758;
+}
+.cloud{
+  background:#E36E79;
+}
+.rain{
+  background: #7B5D90;
+}
+.sunny{
+  background: #e9c429;
+}
 li {
   list-style: none;
 }
@@ -89,11 +101,11 @@ aside {
   width: 90px;
   height: 60px;
   margin-right: 10px;
-}
-.mini_output__main__icon img {
+  border-radius: 0px 0px 15px 15px;
   border-radius: 0px 0px 15px 15px;
   box-shadow: -10px 5px 18px rgba(0, 0, 0, 0.1);
 }
+
 .mini_output__text {
   width: 100%;
   padding-top: 10px;
