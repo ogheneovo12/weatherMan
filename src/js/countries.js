@@ -1191,7 +1191,7 @@ const countries = [
     },
     {
     flag: "https://restcountries.eu/data/gbr.svg",
-    name: "United Kingdom of Great Britain and Northern Ireland",
+    name: "United Kingdom of Great Britain",
     alpha2Code: "GB"
     },
     {

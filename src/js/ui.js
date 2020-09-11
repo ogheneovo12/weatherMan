@@ -6,13 +6,15 @@
  const [timeEl,humidityEl,minmaxEl] = document.querySelectorAll(".output_further > li");
  const alertMessage =  document.querySelector(".alertMessage");
  const alert =  document.querySelector(".alert");
-
+ const historyEl = document.querySelector(".history");
+ const defaultMinor = document.querySelector("#default");
  const loadWrapper = document.createElement("div");
+ 
+
  loadWrapper.setAttribute("class","spinner-wrapper");
  loadWrapper.innerHTML= `<div class="spinner"></div>`
  class UI{
-    static displayWeatherResult(data){
-       const weather = getRelevantData(data)
+    static displayWeatherResult(weather){
        this.setCountry(weather.country);
        this.setCity(weather.city);
        this.setTemperature(weather.temperature);
@@ -62,8 +64,39 @@
        output.insertAdjacentElement('afterbegin',loadWrapper);
        //set forcast class to skeleton
     }
-    static displaySearchHistory(){
-           
+    static displaySearchHistory(history){
+        if(history && history.length <=0)return;
+        let fragment = document.createDocumentFragment();
+        for(let i=history.length-1; i>=0; i--){
+         fragment.appendChild( this.createMinorOutput(history[i]))
+        }
+        historyEl.insertBefore(fragment,historyEl.firstChild);
     }
-    
+    static createMinorOutput(data){
+      const minor = document.createElement("div");
+      minor.setAttribute("class","mini_output shadow")
+      minor.innerHTML= `<div class="mini_output__main flex">
+                <div class="mini_output__main__icon cloud">
+                  <img src="../images/icons/cloudy.png" />
+                </div>
+                <div class="mini_output__text flex">
+                      <span class="mini_output__text_temperature">${data.temperature}</span>
+                      <span class="mini_output__text_city">
+                          <p>${data.city}</p>
+                          <p><i>${data.country}</i></p>
+                      </span>
+                </div>
+            </div>
+                <ul class="other_details">
+                   <li>humidity ${data.time}</li> 
+                   <li>humidity ${data.humidity}</li> 
+                   <li id="min-max">
+                        <span><span class="range">${data.min}</span><sup>&#176;c</sup></span>
+                        <small>-</small>
+                        <span><span class="range">${data.max}</span><sup>&#176;c</sup></span>
+                    </li> 
+                </ul>
+           `
+         return minor;
+    }
 }

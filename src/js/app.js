@@ -1,16 +1,16 @@
-const api_url = "https://api.openweathermap.org/data/2.5/weather/";
+const function_url = "../../../.netlify/functions/weather";
 const input = document.querySelector("#inputui");
 const btn = document.querySelector("#btnget");
-//add environment variables
+
 //map cloud icon to response
 //update save places;
-//save last search to webstorage
-//save last updtae of saved to storage
+
+
 //implement greeting
 //implement feedback
 //implement pwa
 //then submit
-
+initApp();
 btn.addEventListener("click", () => {
   const query = `${input.value}`;
   if (!!!query) return UI.errorAlert("please enter a valid city");
@@ -20,22 +20,20 @@ btn.addEventListener("click", () => {
       (data) => {
         UI.removeLoading();
         UI.displayWeatherResult(data);
+        updateSearchesUi([data]);
       },
-      (error) =>{
-          UI.removeLoading();
-          UI.errorAlert(error)
-        }
+      (error) => {
+        UI.removeLoading();
+        UI.errorAlert(error);
+      }
     )
     .catch(console.log);
 });
 
 function getWeather(query) {
-  return fetch(
-    `${api_url}/?q=${query}&units=metric&appid=`
-  ).then(handleResponse);
+  return fetch(`${function_url}/?q=${query}`).then(handleResponse);
 
   function handleResponse(response) {
-    console.log("response", response);
     return response.text().then((text) => {
       const data = text && JSON.parse(text);
       if (!response.ok) {
@@ -47,8 +45,27 @@ function getWeather(query) {
         const error = (data && data.message) || response.statusText;
         return Promise.reject(error);
       }
-      //StorageHelper.appendWeather(data);
-      return data;
+      const relevantData = getRelevantData(data);
+      StorageHelper.SaveData(relevantData);
+      return relevantData;
     });
   }
+}
+
+function initApp() {
+  UI.displayLoading();
+  const searches = StorageHelper.getData();
+  if (!searches || !searches.length) {
+    //get user geolocation, make request based on geolocation
+    UI.removeLoading();
+    return;
+  }
+  updateSearchesUi();
+  UI.displayWeatherResult(searches.pop());
+  UI.removeLoading();
+}
+
+function updateSearchesUi(data){
+  const searches = data || StorageHelper.getData();
+  UI.displaySearchHistory(searches);
 }
