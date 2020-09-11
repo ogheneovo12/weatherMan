@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./src/css/app.css" />
+    <link rel="stylesheet" href="./src/css/alert.css" />
     <title>Document</title>
 </head>
 
@@ -13,8 +14,8 @@
        <div class="header__bg flex">
            <h2>Good morning</h2>
            <div class="flex">
-             <input type="text" placeholder="enter cityname">
-             <button>check</button>
+             <input type="text" placeholder="enter cityname" id="inputui">
+             <button id="btnget">check</button>
             </div>
        </div>
    </header>
@@ -81,22 +82,31 @@
        <article class="output_region">
            <div class="output flex shadow">
                  <div class="output__inner flex">
-                      <div class="output__inner__text flex">
-                            <span class="output__text_temperature">25</span>
-                            <span class="output__text_city">
-                                <p>Lagos</p>
-                                <p><i>nigeria</i></p>
-                            </span>
-                      </div>
-                      <div class="output__main__icon">
+                    <div class="output__main__icon">
                         <img src="../images/icons/sunny.png" />
-                        <p>partly cloudy</p>
                       </div>
+                      <div class="output__inner__text flex">
+                            <span class="output__text_temperature"><span  id="temp">25</span><sup>&#176;c</sup></span>
+                            <span class="output__text_city">
+                                <p>
+                                  <span  id="city">Lagos</span>
+                                  <span>,</span>
+                                  <span   id="country"> <i>nigeria</i></span>
+                                </p>
+                            </span>
+                            <p id="desc">partly cloudy</p>
+                            
+                      </div>
+                    
                  </div>
-                 <ul class="other_details">
-                    <li>humidity 100%</li> 
-                    <li>humidity 100%</li> 
-                    <li>humidity 100%</li> 
+                 <ul class="other_details output_further">
+                    <li id="time">25th feb 2020</li> 
+                    <li id="humidity">humidity 100%</li> 
+                    <li id="min-max">
+                        <span><span class="range">25</span><sup>&#176;c</sup></span>
+                        <small>-</small>
+                        <span><span class="range">25</span><sup>&#176;c</sup></span>
+                    </li> 
                  </ul>
            </div>
         <div class="forecast_container">
@@ -140,6 +150,12 @@
         </div>
        </article>
    </main>
+   <div class="alert">
+    <p class="alertMessage"></p>
+   <span className="delete"><i className="fa fa-times"></i></span>
+  </div>
+   <script src="./src/js/countries.js" defer></script>
+   <script src="./src/js/helpers.js" defer></script>
    <script src="./src/js/ui.js" defer></script>
    <script src="./src/js/app.js" defer></script>
 </body>
